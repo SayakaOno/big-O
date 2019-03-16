@@ -47,6 +47,23 @@ class singlyLinkedList {
     this.length--;
     return this;
   }
+  reverse() {
+    if (this.length === 1) {
+      return this;
+    }
+    let first = this.head;
+    this.tail = this.head;
+    let second = first.next;
+    while (second) {
+      let temp = second.next;
+      second.next = first;
+      first = second;
+      second = temp;
+    }
+    this.head.next = null;
+    this.head = first;
+    return this;
+  }
   traverseToIndex(index) {
     let counter = 0;
     let currentNode = this.head;
@@ -68,11 +85,13 @@ class singlyLinkedList {
 }
 //1,10,5,16
 
-const myLinkedList = new LinkedList(10);
+const myLinkedList = new singlyLinkedList(10);
 myLinkedList.append(5);
 myLinkedList.append(16);
 myLinkedList.prepend(1);
 myLinkedList.insert(4, 7);
 console.log(myLinkedList.printList());
 myLinkedList.remove(2);
+console.log(myLinkedList.printList());
+myLinkedList.reverse();
 console.log(myLinkedList.printList());
