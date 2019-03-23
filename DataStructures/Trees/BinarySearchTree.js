@@ -69,13 +69,11 @@ class BinarySearchTree {
       }
       currentNodes.shift();
     }
-    console.log(list);
     return list;
   }
 
   breadthFirstSearchR(currentNodes, list) {
     if (!currentNodes.length) {
-      console.log(list);
       return list;
     }
     list.push(currentNodes[0].value);
@@ -88,6 +86,16 @@ class BinarySearchTree {
     currentNodes.shift();
     return this.breadthFirstSearchR(currentNodes, list);
   }
+
+  DFSInorder() {
+    return traverseInOrder(this.root, []);
+  }
+  DFSPreorder() {
+    return traversePreOrder(this.root, []);
+  }
+  DFSPostorder() {
+    return traversePostOrder(this.root, []);
+  }
 }
 
 function traverse(node) {
@@ -95,6 +103,39 @@ function traverse(node) {
   tree.left = node.left === null ? null : traverse(node.left);
   tree.rigth = node.right === null ? null : traverse(node.right);
   return tree;
+}
+
+function traverseInOrder(node, list) {
+  if (node.left) {
+    traverseInOrder(node.left, list);
+  }
+  list.push(node.value);
+  if (node.right) {
+    traverseInOrder(node.right, list);
+  }
+  return list;
+}
+
+function traversePreOrder(node, list) {
+  list.push(node.value);
+  if (node.left) {
+    traversePreOrder(node.left, list);
+  }
+  if (node.right) {
+    traversePreOrder(node.right, list);
+  }
+  return list;
+}
+
+function traversePostOrder(node, list) {
+  if (node.left) {
+    traversePostOrder(node.left, list);
+  }
+  if (node.right) {
+    traversePostOrder(node.right, list);
+  }
+  list.push(node.value);
+  return list;
 }
 
 const tree = new BinarySearchTree();
@@ -106,4 +147,6 @@ tree.insert(170);
 tree.insert(15);
 tree.insert(1);
 
-tree.breadthFirstSearchR([tree.root], []);
+console.log(tree.DFSInorder());
+console.log(tree.DFSPreorder());
+console.log(tree.DFSPostorder());
